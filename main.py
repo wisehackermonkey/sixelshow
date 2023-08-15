@@ -9,7 +9,18 @@ def show_image(filename):
     encoder.setopt(SIXEL_OPTFLAG_COLORS, "16")
     encoder.encode(filename)
 
+def has_supported_terminal():
+    return os.environ.get("TERM") != None
 def main(stdscr):
+    if not has_supported_terminal():
+        print("""Sorry your terminal is not supported, please try opening within a supported terminal emulator
+mintty(for windows use wsltty)
+https://github.com/mintty/wsltty/releases
+or 
+cmder
+https://cmder.app/
+""")
+        quit()
     curses.curs_set(0)  # Hide the cursor
     curses.noecho()
     curses.cbreak()
