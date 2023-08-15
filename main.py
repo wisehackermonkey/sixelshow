@@ -19,16 +19,16 @@ def main(stdscr):
     png_files = [file for file in os.listdir(
         current_directory) if file.endswith('.png') or file.endswith(".jpg")]
     current_index = 0
-    if png_files:
-        filename = png_files[current_index]
-        stdscr.addstr( os.get_terminal_size().lines-2,0, f"Showing: {filename}", curses.A_BOLD)
-        show_image(filename)
-    else:
-        stdscr.addstr(1, 0, "No .png files found in the directory.")
-
+   
+    run_once = True
     while True:
-        stdscr.addstr( os.get_terminal_size().lines-1,0
-, "Press 'Q' to quit")
+        if run_once:
+            run_once == False
+            show_image(png_files[0])
+            stdscr.clear()
+            stdscr.refresh()
+            
+        stdscr.addstr( os.get_terminal_size().lines-1,0, "Press 'Q' to quit")
 
         if png_files:
             filename = png_files[current_index]
@@ -38,7 +38,7 @@ def main(stdscr):
             stdscr.addstr(1, 0, "No .png files found in the directory.")
 
         key = stdscr.getch()
-
+        
         if key == ord('q') or key == ord('Q'):
             break
         elif key == curses.KEY_RIGHT:
